@@ -1,6 +1,4 @@
-/* $(function() {
-    
-   }); */
+//Links to each page
 function trainingDirect() {
    window.location ="Training.html";
         }
