@@ -1,9 +1,17 @@
+<script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js">
-$(document).ready(() =&gt; {
-      $.get('/players', (data) => {
-        // Process the player stats data and display it on the page
-      })
-    });
+    function displayStats() {
+        $.ajax({
+            url: 'api/stats',
+            type: 'GET',
+            success: function(stats) {
+                //use the stats data to update the DOM
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(errorThrown);
+            }
+        })
+    }
 
+    
 </script>

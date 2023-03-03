@@ -16,8 +16,8 @@ MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (e
   const db = client.db('MK');
 
   // Define your routes here
-  app.get('/players', (req, res) => {
-    db.collection('players').find().toArray((err, result) => {
+  app.get('/api/stats', (req, res) => {
+    db.collection('Stats').find().toArray((err, result) => {
       if (err) {
         console.error(err);
         res.status(500).send('An error occurred while fetching players.');

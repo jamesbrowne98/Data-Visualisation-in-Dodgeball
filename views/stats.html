@@ -39,8 +39,36 @@
   <body>
     <h1>Player Stats</h1>
     <p>Here you'll be able to view individual player stats and see how they're performing on the team.</p>
-    <div id="player-stats">
+    <table id="player-stats">
+      <thead>
+        <tr>
+        <th>Player Name</th>
+        <th>Hits</th>
+        <th>Catches</th>
+        <th>Total Eliminations</th>
+        <th>Single ball Eliminations</th>
+        <th>Team elimination</th>
+        <th>Dodges/blocks</th>
+        <th>Times Hit</th>
+        <th>Single out</th>
+        <th>Team Out</th>
+        <th>Misc Out</th>
+        <th>Times Caught</th>
+        <th>Times Eliminated</th>
+        <th>KD</th>
+        <th>Set Off</th>
+        </tr> 
+      </thead>
       <!-- Player stats will be displayed here -->
-    </div>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        displayStats();
+      });
+    </script>
+    
   </body>
 </html>
