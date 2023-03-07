@@ -1,32 +1,39 @@
 function displayStats() {
   $.ajax({
-    url: '/api/stats',
-    type: 'GET',
-    success: function(response) {
-      let output = '';
-      for (let i = 0; i < response.length; i++) {
-        output += `
-          <tr>
-            <td>${response[i].PlayerName}</td>
-            <td>${response[i].hits}</td>
-            <td>${response[i].catches}</td>
-            <td>${response[i].totalEliminations}</td>
-            <td>${response[i].singleBallEliminations}</td>
-            <td>${response[i].teamEliminations}</td>
-            <td>${response[i].dodges}</td>
-            <td>${response[i].timesHit}</td>
-            <td>${response[i].singleOut}</td>
-            <td>${response[i].teamOut}</td>
-            <td>${response[i].miscOut}</td>
-            <td>${response[i].timesCaught}</td>
-            <td>${response[i].timesEliminated}</td>
-            <td>${response[i].KD}</td>
-            <td>${response[i].setsOff}</td>
-          </tr>
-        `;
+    url: "/stats",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      // This code will be executed when the request is successful
+      // You can access the player stats data in the 'data' parameter
+      // and use it to update the table in your HTML file
+      var playerStatsTable = $("#player-stats");
+      for (var i = 0; i < data.length; i++) {
+        var playerStats = data[i];
+        var row = $("<tr>");
+        row.append($("<td>").text(playerStats.name));
+        row.append($("<td>").text(playerStats.hits));
+        row.append($("<td>").text(playerStats.catches));
+        row.append($("<td>").text(playerStats.eliminations));
+        row.append($("<td>").text(playerStats.single_ball_eliminations));
+        row.append($("<td>").text(playerStats.team_elimination));
+        row.append($("<td>").text(playerStats.dodges_blocks));
+        row.append($("<td>").text(playerStats.times_hit));
+        row.append($("<td>").text(playerStats.single_out));
+        row.append($("<td>").text(playerStats.team_out));
+        row.append($("<td>").text(playerStats.misc_out));
+        row.append($("<td>").text(playerStats.times_caught));
+        row.append($("<td>").text(playerStats.times_eliminated));
+        row.append($("<td>").text(playerStats.kd));
+        row.append($("<td>").text(playerStats.set_off));
+        playerStatsTable.append(row);
       }
-      $('#player-stats').html(output);
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      // This code will be executed if the request fails
+      console.log("Error: " + textStatus);
     }
   });
 }
+
 

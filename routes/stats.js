@@ -1,5 +1,5 @@
-const { ObjectId } = require('bson');
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongoose');
 
 const statsSchema = new mongoose.Schema({
   // Define schema for stats data
@@ -25,5 +25,17 @@ const statsSchema = new mongoose.Schema({
 
 const Stats = mongoose.model('Stats', statsSchema);
 
-module.exports = Stats;
+const express = require('express');
+const router = express.Router();
 
+router.get('/', async (req, res) => {
+    try {
+      const stats = await Stats.find({});
+      res.json(stats);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
+
+module.exports = router;
