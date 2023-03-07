@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://jamesbrowne:tGkr76p5m8cgfGUG@cluster0.90fwvtk.mo
 app.use(express.json());
 
 // Routes
-app.use('/', require('./routes/stats'));
+app.use('/', require('./routes/api'));
 
 // Start server
 const PORT = process.env.PORT || 5000;

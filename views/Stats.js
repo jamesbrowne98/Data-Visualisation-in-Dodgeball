@@ -1,6 +1,6 @@
 function displayStats() {
     $.ajax({
-      url: '/api/stats',
+      url: '/routes/api',
       type: 'GET',
       success: function(stats) {
         // use the stats data to update the DOM

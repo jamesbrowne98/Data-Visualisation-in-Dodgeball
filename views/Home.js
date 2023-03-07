@@ -22,3 +22,7 @@ function trainingDirect() {
                                 function welcomeDirect() {
                                  window.location ="Welcome.html";
                                       }
+
+                                      function homeDirect() {
+                                        window.location="Home.html";
+                                      }

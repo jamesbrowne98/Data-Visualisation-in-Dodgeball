@@ -2,7 +2,7 @@ const { ObjectId } = require('bson');
 const mongoose = require('mongoose');
 
 const statsSchema = new mongoose.Schema({
-  // Define schema for your stats data
+  // Define schema for stats data
   _id: { type: ObjectId, required: true},
   player_id: { type: String, required: true},
   game_id: { type: String, required: true},
