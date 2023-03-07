@@ -1,6 +1,6 @@
 function displayStats() {
   $.ajax({
-    url: '/routes/api',
+    url: '/api/stats',
     type: 'GET',
     success: function(response) {
       let output = '';
@@ -29,3 +29,4 @@ function displayStats() {
     }
   });
 }
+

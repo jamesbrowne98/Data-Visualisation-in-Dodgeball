@@ -6,8 +6,8 @@ const Stats = require('../models/stats'); // import your Stats model here
 // GET stats data
 router.get('/stats', async (req, res) => {
   try {
-    const statsData = await Stats.find({});
-    res.json(statsData);
+    const stats = await Stats.find();
+    res.json(stats);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
