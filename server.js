@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/api');
@@ -7,6 +8,7 @@ const app = express();
 
 // Parse incoming requests with JSON payloads
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up routes for API endpoints
 app.use('/api', apiRoutes);

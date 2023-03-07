@@ -3,12 +3,12 @@ const router = express.Router();
 const Stats = require('../models/stats');
 
 // Route to get stats data
-router.get('/stats', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const statsData = await Stats.find();
-    res.json(statsData);
+    const stats = await Stats.find();
+    res.json(stats);
   } catch (err) {
-    res.json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
 

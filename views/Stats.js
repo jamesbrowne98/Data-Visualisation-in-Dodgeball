@@ -1,33 +1,31 @@
 function displayStats() {
-    $.ajax({
-      url: '/routes/api',
-      type: 'GET',
-      success: function(stats) {
-        // use the stats data to update the DOM
-        var tableBody = $('#player-stats tbody');
-        for (var i = 0; i < stats.length; i++) {
-          var row = $('<tr>');
-          row.append($('<td>').text(stats[i].playerName));
-          row.append($('<td>').text(stats[i].hits));
-          row.append($('<td>').text(stats[i].catches));
-          row.append($('<td>').text(stats[i].totalEliminations));
-          row.append($('<td>').text(stats[i].singleBallEliminations));
-          row.append($('<td>').text(stats[i].teamElimination));
-          row.append($('<td>').text(stats[i].dodgesBlocks));
-          row.append($('<td>').text(stats[i].timesHit));
-          row.append($('<td>').text(stats[i].singleOut));
-          row.append($('<td>').text(stats[i].teamOut));
-          row.append($('<td>').text(stats[i].miscOut));
-          row.append($('<td>').text(stats[i].timesCaught));
-          row.append($('<td>').text(stats[i].timesEliminated));
-          row.append($('<td>').text(stats[i].kd));
-          row.append($('<td>').text(stats[i].setOff));
-          tableBody.append(row);
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error(errorThrown);
+  $.ajax({
+    url: '/api',
+    type: 'GET',
+    success: function(response) {
+      let output = '';
+      for (let i = 0; i < response.length; i++) {
+        output += `
+          <tr>
+            <td>${response[i].PlayerName}</td>
+            <td>${response[i].hits}</td>
+            <td>${response[i].catches}</td>
+            <td>${response[i].totalEliminations}</td>
+            <td>${response[i].singleBallEliminations}</td>
+            <td>${response[i].teamEliminations}</td>
+            <td>${response[i].dodges}</td>
+            <td>${response[i].timesHit}</td>
+            <td>${response[i].singleOut}</td>
+            <td>${response[i].teamOut}</td>
+            <td>${response[i].miscOut}</td>
+            <td>${response[i].timesCaught}</td>
+            <td>${response[i].timesEliminated}</td>
+            <td>${response[i].KD}</td>
+            <td>${response[i].setsOff}</td>
+          </tr>
+        `;
       }
-    });
-  }
-  
+      $('#player-stats').html(output);
+    }
+  });
+}
