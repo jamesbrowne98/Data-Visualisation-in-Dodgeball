@@ -1,6 +1,6 @@
 function displayStats() {
   $.ajax({
-    url: '/api',
+    url: '/routes/api',
     type: 'GET',
     success: function(response) {
       let output = '';

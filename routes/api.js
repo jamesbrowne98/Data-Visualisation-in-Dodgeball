@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Stats = require('../models/stats');
+const mongoose = require('mongoose');
+const Stats = require('../models/stats'); // import your Stats model here
 
-// Route to get stats data
-router.get('/', async (req, res) => {
+// GET stats data
+router.get('/stats', async (req, res) => {
   try {
-    const stats = await Stats.find();
-    res.json(stats);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const statsData = await Stats.find({});
+    res.json(statsData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
   }
 });
 
