@@ -1,5 +1,5 @@
+const { ObjectId } = require('bson');
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongoose');
 
 const statsSchema = new mongoose.Schema({
   // Define schema for stats data
@@ -23,19 +23,7 @@ const statsSchema = new mongoose.Schema({
   setsOff: {type: Number, required: true},
 });
 
-const express = require('express');
-const router = express.Router();
-const Stats = require('../models/stats');
+const Stats = mongoose.model('stats', statsSchema);
 
-// GET all stats
-router.get('/', async (req, res) => {
-  try {
-    const stats = await Stats.find({}).limit(100).maxTimeMS(30000);
-    res.json(stats);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server Error');
-  }
-});
+module.exports = Stats;
 
-module.exports = router;

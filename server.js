@@ -1,7 +1,18 @@
 const express = require('express');
-const statsRouter = require('./routes/stats');
-
+const morgan = require('morgan');
 const app = express();
+
+
+// Use Morgan middleware to log requests
+app.use(morgan('dev'));
+
+const statsRouter = require('./routes/stats');
+app.use(express.static('views'));
+
+
+app.use('/stats', (req, res) => {
+  res.sendFile(__dirname + '/views/stats.html');
+});
 
 app.use('/api/stats', statsRouter);
 

@@ -1,6 +1,7 @@
+/*
 function displayStats() {
   $.ajax({
-    url: "/stats",
+    url: "/api/stats",
     type: "GET",
     dataType: "json",
     success: function(data) {
@@ -35,5 +36,45 @@ function displayStats() {
     }
   });
 }
+*/
+
+function displayStats() {
+  $.ajax({
+    url: "/api/stats",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      var playerStatsTable = $("#player-stats");
+      for (var i = 0; i < data.length; i++) {
+        var playerStats = data[i];
+        var row = $("<tr>");
+        row.append($("<td>").text(playerStats.PlayerName));
+        row.append($("<td>").text(playerStats.hits));
+        row.append($("<td>").text(playerStats.catches));
+        row.append($("<td>").text(playerStats.totalEliminations));
+        row.append($("<td>").text(playerStats.singleBallEliminations));
+        row.append($("<td>").text(playerStats.teamEliminations));
+        row.append($("<td>").text(playerStats.dodges));
+        row.append($("<td>").text(playerStats.timesHit));
+        row.append($("<td>").text(playerStats.singleOut));
+        row.append($("<td>").text(playerStats.teamOut));
+        row.append($("<td>").text(playerStats.miscOut));
+        row.append($("<td>").text(playerStats.timesCaught));
+        row.append($("<td>").text(playerStats.timesEliminated));
+        row.append($("<td>").text(playerStats.kd));
+        row.append($("<td>").text(playerStats.setOff));
+        playerStatsTable.append(row);
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log("Error: " + textStatus);
+    }
+  });
+}
+
+$(document).ready(function() {
+  displayStats();
+});
+
 
 
