@@ -5,6 +5,7 @@ const app = express();
 
 // Use Morgan middleware to log requests
 app.use(morgan('dev'));
+app.use(express.static('public'));
 
 const statsRouter = require('./routes/stats');
 app.use(express.static('views'));

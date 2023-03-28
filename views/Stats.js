@@ -1,80 +1,29 @@
-/*
-function displayStats() {
-  $.ajax({
-    url: "/api/stats",
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-      // This code will be executed when the request is successful
-      // You can access the player stats data in the 'data' parameter
-      // and use it to update the table in your HTML file
-      var playerStatsTable = $("#player-stats");
-      for (var i = 0; i < data.length; i++) {
-        var playerStats = data[i];
-        var row = $("<tr>");
-        row.append($("<td>").text(playerStats.name));
-        row.append($("<td>").text(playerStats.hits));
-        row.append($("<td>").text(playerStats.catches));
-        row.append($("<td>").text(playerStats.eliminations));
-        row.append($("<td>").text(playerStats.single_ball_eliminations));
-        row.append($("<td>").text(playerStats.team_elimination));
-        row.append($("<td>").text(playerStats.dodges_blocks));
-        row.append($("<td>").text(playerStats.times_hit));
-        row.append($("<td>").text(playerStats.single_out));
-        row.append($("<td>").text(playerStats.team_out));
-        row.append($("<td>").text(playerStats.misc_out));
-        row.append($("<td>").text(playerStats.times_caught));
-        row.append($("<td>").text(playerStats.times_eliminated));
-        row.append($("<td>").text(playerStats.kd));
-        row.append($("<td>").text(playerStats.set_off));
-        playerStatsTable.append(row);
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      // This code will be executed if the request fails
-      console.log("Error: " + textStatus);
-    }
+import axios from 'axios';
+import axios from '/axios.min.js';
+
+const playerId = 'replace_with_actual_player_id';
+
+axios.get(`/stats/${playerId}`)
+  .then(response => {
+    const stats = response.data;
+    const statsDiv = document.getElementById('stats');
+    statsDiv.innerHTML = `
+      <p>Hits: ${stats.hits}</p>
+      <p>Catches: ${stats.catches}</p>
+      <p>Total Eliminations: ${stats.totalEliminations}</p>
+      <p>Single Ball Eliminations: ${stats.singleBallEliminations}</p>
+      <p>Team Eliminations: ${stats.teamEliminations}</p>
+      <p>Dodges: ${stats.dodges}</p>
+      <p>Times Hit: ${stats.timesHit}</p>
+      <p>Single Out: ${stats.singleOut}</p>
+      <p>Team Out: ${stats.teamOut}</p>
+      <p>Misc Out: ${stats.miscOut}</p>
+      <p>Times Caught: ${stats.timesCaught}</p>
+      <p>Times Eliminated: ${stats.timesEliminated}</p>
+      <p>KD: ${stats.KD}</p>
+      <p>Sets Off: ${stats.setsOff}</p>
+    `;
+  })
+  .catch(error => {
+    console.error(error);
   });
-}
-*/
-
-function displayStats() {
-  $.ajax({
-    url: "/api/stats",
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-      var playerStatsTable = $("#player-stats");
-      for (var i = 0; i < data.length; i++) {
-        var playerStats = data[i];
-        var row = $("<tr>");
-        row.append($("<td>").text(playerStats.PlayerName));
-        row.append($("<td>").text(playerStats.hits));
-        row.append($("<td>").text(playerStats.catches));
-        row.append($("<td>").text(playerStats.totalEliminations));
-        row.append($("<td>").text(playerStats.singleBallEliminations));
-        row.append($("<td>").text(playerStats.teamEliminations));
-        row.append($("<td>").text(playerStats.dodges));
-        row.append($("<td>").text(playerStats.timesHit));
-        row.append($("<td>").text(playerStats.singleOut));
-        row.append($("<td>").text(playerStats.teamOut));
-        row.append($("<td>").text(playerStats.miscOut));
-        row.append($("<td>").text(playerStats.timesCaught));
-        row.append($("<td>").text(playerStats.timesEliminated));
-        row.append($("<td>").text(playerStats.kd));
-        row.append($("<td>").text(playerStats.setOff));
-        playerStatsTable.append(row);
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      console.log("Error: " + textStatus);
-    }
-  });
-}
-
-$(document).ready(function() {
-  displayStats();
-});
-
-
-
