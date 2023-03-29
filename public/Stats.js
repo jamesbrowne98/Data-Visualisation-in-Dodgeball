@@ -1,13 +1,17 @@
-import axios from 'axios';
-import axios from '/axios.min.js';
+import { Types } from 'mongoose';
+const ObjectId = Types.ObjectId('63f6887692f21f7fab622501');
 
-const playerId = 'replace_with_actual_player_id';
-
-axios.get(`/stats/${playerId}`)
+fetch(`/api/stats/${ObjectId}`)
   .then(response => {
-    const stats = response.data;
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(stats => {
     const statsDiv = document.getElementById('stats');
     statsDiv.innerHTML = `
+      <p>Name: ${stats.PlayerName}</p>
       <p>Hits: ${stats.hits}</p>
       <p>Catches: ${stats.catches}</p>
       <p>Total Eliminations: ${stats.totalEliminations}</p>
@@ -27,3 +31,4 @@ axios.get(`/stats/${playerId}`)
   .catch(error => {
     console.error(error);
   });
+

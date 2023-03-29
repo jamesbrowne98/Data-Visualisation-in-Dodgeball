@@ -4,14 +4,13 @@ const app = express();
 
 // Use Morgan middleware to log requests
 app.use(morgan('dev'));
-app.use(express.static('public'));
 
 // Serve static files from the views directory
-app.use(express.static('views'));
+app.use(express.static('public'));
 
 // Serve the stats.html file for the /stats route
 app.get('/stats', (req, res) => {
-  res.sendFile(__dirname + '/views/stats.html');
+  res.sendFile(__dirname + '/public/stats.html');
 });
 
 // Mount the stats router at the /api/stats route
