@@ -1,7 +1,4 @@
-import { Types } from 'mongoose';
-const ObjectId = Types.ObjectId('63f6887692f21f7fab622501');
-
-fetch(`/api/stats/${ObjectId}`)
+fetch('/api/Stats')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -10,7 +7,10 @@ fetch(`/api/stats/${ObjectId}`)
   })
   .then(stats => {
     const statsDiv = document.getElementById('stats');
+    console.log('Stats data:', stats);
     statsDiv.innerHTML = `
+      <p>Player ID: ${stats.player_id}</p>
+      <p>Game ID: ${stats.game_id}</p>
       <p>Name: ${stats.PlayerName}</p>
       <p>Hits: ${stats.hits}</p>
       <p>Catches: ${stats.catches}</p>
