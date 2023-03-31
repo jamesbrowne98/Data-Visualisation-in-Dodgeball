@@ -16,11 +16,11 @@ router.get('/', async (req, res) => {
 // Get a single stat by ID
 router.get('/:id', async (req, res) => {
   try {
-    const stat = await Stats.findById(req.params.id);
-    if (!stat) {
+    const Stats = await Stats.findById(req.params.id).exec();
+    if (!Stats) {
       return res.status(404).json({ msg: 'Stat not found' });
     }
-    res.json(stat);
+    res.json(Stats);
   } catch (error) {
     console.error(error);
     if (error.kind === 'ObjectId') {

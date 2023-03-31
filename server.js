@@ -27,7 +27,7 @@ mongoose.connection.on('error', error => {
 });
 
 // Mount the stats router at the /api/stats route
-app.use('/api/stats', router);
+app.use('/api/Stats', router);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');

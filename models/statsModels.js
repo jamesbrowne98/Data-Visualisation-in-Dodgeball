@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const statsSchema = new mongoose.Schema({
+const StatsSchema = new mongoose.Schema({
   player_id: {
     type: String,
     required: true
@@ -71,6 +71,6 @@ const statsSchema = new mongoose.Schema({
   }
 });
 
-const Stats = mongoose.model('Stats', statsSchema);
+const Stats = mongoose.model('Stats', StatsSchema);
 
 module.exports = Stats;
