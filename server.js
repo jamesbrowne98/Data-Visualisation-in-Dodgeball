@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const router = require('./routes/api');
+const statsRouter = require('./routes/api');
 
 const app = express();
 
@@ -27,7 +27,7 @@ mongoose.connection.on('error', error => {
 });
 
 // Mount the stats router at the /api/stats route
-app.use('/api/Stats', router);
+app.use('/api/Stats', statsRouter);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
