@@ -136,11 +136,11 @@ fetch('/api/Stats')
         </select>
         <input type="text" value={gameId} onChange={handleGameIdChange} />
         <svg ref={svgRef} width={500} height={500}>
-          <g></g>
         </svg>
       </div>
     );
      }
   
   export default Stats;
+  
   
