@@ -3,6 +3,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script type="module" src="Stats.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <style>
@@ -24,6 +25,7 @@
       width: 100%;
       /* Full width */            
     }
+
   </style>
   <head> 
     <div class="topnav">
@@ -55,6 +57,9 @@
       <select id="playerSelect2"></select>
       <button id="compareButton">Compare</button>
     </div>    
-    <div id="comparison"></div>
+    <div id="comparison">
+      <h2>Comparing ${playerName1} and ${playerName2}</h2>
+      <canvas id="comparisonChart"></canvas>
+    </div>    
   </body>
 </html>

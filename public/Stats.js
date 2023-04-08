@@ -78,7 +78,6 @@ fetch('/api/Stats')
     statsDiv.innerHTML = statsHTML;
     
     // Get players' names and create dropdown options
-    const playerSelect = document.createElement('select');
     const playerSelectContainer = document.getElementById('playerSelectContainer');
     const playerNames = [...new Set(statsArray.map(stats => stats.PlayerName))];
     playerNames.forEach(name => {
@@ -126,63 +125,54 @@ function compareStats(statsArray, playerName1, playerName2) {
   const player2Stats = statsArray.filter(stats => stats.PlayerName === playerName2)[0];
   
   const comparisonDiv = document.getElementById('comparison');
-  if (comparisonDiv) {
   comparisonDiv.innerHTML = `
     <h2>Comparing ${playerName1} and ${playerName2}</h2>
-    <div class="comparison-row">
-      <div class="comparison-item">
-        <h3>Hits</h3>
-        <p>${playerName1}: ${player1Stats.hits}</p>
-        <p>${playerName2}: ${player2Stats.hits}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>Catches</h3>
-        <p>${playerName1}: ${player1Stats.catches}</p>
-        <p>${playerName2}: ${player2Stats.catches}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>Eliminations</h3>
-        <p>${playerName1}: ${player1Stats.totalEliminations}</p>
-        <p>${playerName2}: ${player2Stats.totalEliminations}</p>
-      </div>
-    </div>
-    <div class="comparison-row">
-      <div class="comparison-item">
-        <h3>Dodges</h3>
-        <p>${playerName1}: ${player1Stats.dodges}</p>
-        <p>${playerName2}: ${player2Stats.dodges}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>Times Hit</h3>
-        <p>${playerName1}: ${player1Stats.timesHit}</p>
-        <p>${playerName2}: ${player2Stats.timesHit}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>Times Caught</h3>
-        <p>${playerName1}: ${player1Stats.timesCaught}</p>
-        <p>${playerName2}: ${player2Stats.timesCaught}</p>
-      </div>
-    </div>
-    <div class="comparison-row">
-      <div class="comparison-item">
-        <h3>Times Eliminated</h3>
-        <p>${playerName1}: ${player1Stats.timesEliminated}</p>
-        <p>${playerName2}: ${player2Stats.timesEliminated}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>KD</h3>
-        <p>${playerName1}: ${player1Stats.KD.$numberDecimal}</p>
-        <p>${playerName2}: ${player2Stats.KD.$numberDecimal}</p>
-      </div>
-      <div class="comparison-item">
-        <h3>Sets Off</h3>
-        <p>${playerName1}: ${player1Stats.setsOff}</p>
-        <p>${playerName2}: ${player2Stats.setsOff}</p>
-      </div>
-    </div>
+    <canvas id="comparisonChart"></canvas>
   `;
-} else {
-  console.error('Could not find comparisonDiv element in DOM');
+  
+  const comparisonChart = new Chart(document.getElementById('comparisonChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Hits', 'Catches', 'Eliminations', 'Dodges', 'Times Hit', 'Times Caught', 'Times Eliminated'],
+      datasets: [
+        {
+          label: playerName1,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          data: [player1Stats.hits, player1Stats.catches, player1Stats.totalEliminations, player1Stats.dodges, player1Stats.timesHit, player1Stats.timesCaught, player1Stats.timesEliminated]
+        },
+        {
+          label: playerName2,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          data: [player2Stats.hits, player2Stats.catches, player2Stats.totalEliminations, player2Stats.dodges, player2Stats.timesHit, player2Stats.timesCaught, player2Stats.timesEliminated]
+        }
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true
+            }
+          }
+        ]
+      }
+    }
+  });
 }
-}
+// Get the compare button element
+const compareButton = document.querySelector('#compare-button');
+
+// Add a click event listener to the compare button
+compareButton.addEventListener('click', function() {
+  // Get the graph canvas element
+  const graphCanvas = document.querySelector('#graph-canvas');
+
+  // Set the background color of the graph canvas to white
+  graphCanvas.style.backgroundColor = 'white';
+});
 
