@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Stats = require('../models/statsModels');
 
-// Get all stats
+// Get stats with optional player name filter
 router.get('/', async (req, res) => {
   try {
-    const stats = await Stats.find();
+    const playerName = req.query.PlayerName; // Get the playerName query parameter
+    let stats;
+
+    if (playerName) {
+      // If playerName is provided, filter the stats by player name
+      stats = await Stats.find({ PlayerName: playerName });
+    } else {
+      // Otherwise, get all the stats
+      stats = await Stats.find();
+    }
+
     res.json(stats);
   } catch (error) {
     console.error(error);

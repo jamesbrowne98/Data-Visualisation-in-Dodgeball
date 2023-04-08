@@ -3,7 +3,8 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script type="module" src="Stats.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
- 
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <style>
     body {
         background-image: url(images/purple-black-stripes.jpeg);
@@ -41,46 +42,19 @@
     <title>Stats Page</title>
   </head>
   <body>
-    <h1>Player Stats</h1>
-    <p>Here you'll be able to view individual player stats and see how they're performing on the team.</p>
-    <form id="stats-form">
-      <label for="player-select">Select player:</label>
-      <select id="player-select">
-        <!-- Player options will be added here dynamically -->
-      </select>
-      <br>
-      <label for="game-select">Select game:</label>
-      <select id="game-select">
-        <!-- Game options will be added here dynamically -->
-      </select>
-      <br>
-      <button type="submit">Show Stats</button>
-    </form>
-    <table id="stats">
-      <thead>
-        <tr>
-          <th>Player ID</th>
-          <th>Game ID</th>
-          <th>Name</th>
-          <th>Hits</th>
-          <th>Catches</th>
-          <th>Total Eliminations</th>
-          <th>Single Ball Eliminations</th>
-          <th>Team Eliminations</th>
-          <th>Dodges</th>
-          <th>Times Hit</th>
-          <th>Single Out</th>
-          <th>Team Out</th>
-          <th>Misc Out</th>
-          <th>Times Caught</th>
-          <th>Times Eliminated</th>
-          <th>KD</th>
-          <th>Sets Off</th>
-        </tr>
-      </thead>
-      <tbody id="stats-body">
-        <!-- Stats will be added here dynamically -->
-      </tbody>
-    </table>
+    <div id="stats"></div>
+    <div id="chart"></div>
+    <div id="playerSelectContainer">
+      <label for="playerSelect">Select a player:</label>
+      <select id="playerSelect"></select>
+    </div>
+    <div id="compareSelectContainer">
+      <label for="playerSelect1">Select player 1:</label>
+      <select id="playerSelect1"></select>
+      <label for="playerSelect2">Select player 2:</label>
+      <select id="playerSelect2"></select>
+      <button id="compareButton">Compare</button>
+    </div>    
+    <div id="comparison"></div>
   </body>
 </html>
