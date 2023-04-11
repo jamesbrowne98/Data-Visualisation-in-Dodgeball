@@ -81,38 +81,31 @@ fetch('/api/Stats')
     const playerSelectContainer = document.getElementById('playerSelectContainer');
     const playerNames = [...new Set(statsArray.map(stats => stats.PlayerName))];
     playerNames.forEach(name => {
-      const option = document.createElement('option');
-      option.value = name;
-      option.text = name;
-      playerSelect.add(option);
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.name = name;
+      checkbox.value = name;
+      playerSelectContainer.appendChild(checkbox);
+      const label = document.createElement('label');
+      label.htmlFor = name;
+      label.appendChild(document.createTextNode(name));
+      playerSelectContainer.appendChild(label);
     });
     
-    // Create comparison dropdowns
+    // Create comparison checkboxes and button
     const compareSelectContainer = document.getElementById('compareSelectContainer');
-    compareSelectContainer.innerHTML = '';
-    const compareSelect1 = document.createElement('select');
-    const compareSelect2 = document.createElement('select');
-    playerNames.forEach(name => {
-      const option1 = document.createElement('option');
-      option1.value = name;
-      option1.text = name;
-      compareSelect1.add(option1);
-      
-      const option2 = document.createElement('option');
-      option2.value = name;
-      option2.text = name;
-      compareSelect2.add(option2);
-    });
-    
     const compareButton = document.createElement('button');
     compareButton.innerText = 'Compare';
     compareButton.addEventListener('click', () => {
-      compareStats(statsArray, compareSelect1.value, compareSelect2.value);
+      const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+      if (selectedPlayers.length === 2) {
+        compareStats(statsArray, selectedPlayers[0], selectedPlayers[1]);
+      } else {
+        alert('Please select exactly 2 players to compare');
+      }
     });
     
-    playerSelectContainer.appendChild(playerSelect);
-    compareSelectContainer.appendChild(compareSelect1);
-    compareSelectContainer.appendChild(compareSelect2);
+    compareSelectContainer.appendChild(playerSelectContainer);
     compareSelectContainer.appendChild(compareButton);
   })
   .catch(error => {
@@ -166,6 +159,7 @@ function compareStats(statsArray, playerName1, playerName2) {
 }
 // Get the compare button element
 const compareButton = document.querySelector('#compare-button');
+
 
 // Add a click event listener to the compare button
 compareButton.addEventListener('click', function() {
