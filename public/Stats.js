@@ -98,10 +98,10 @@ fetch('/api/Stats')
     compareButton.innerText = 'Compare';
     compareButton.addEventListener('click', () => {
       const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
-      if (selectedPlayers.length === 2) {
-        compareStats(statsArray, selectedPlayers[0], selectedPlayers[1]);
+      if (selectedPlayers.length > 1) {
+        compareStats(statsArray, selectedPlayers);
       } else {
-        alert('Please select exactly 2 players to compare');
+        alert('Please select at least 2 players to compare');
       }
     });
     
@@ -112,61 +112,52 @@ fetch('/api/Stats')
     console.error(error);
   });
 
-// Compare two players' stats
-function compareStats(statsArray, playerName1, playerName2) {
-  const player1Stats = statsArray.filter(stats => stats.PlayerName === playerName1)[0];
-  const player2Stats = statsArray.filter(stats => stats.PlayerName === playerName2)[0];
-  
-  const comparisonDiv = document.getElementById('comparison');
-  comparisonDiv.innerHTML = `
-    <h2>Comparing ${playerName1} and ${playerName2}</h2>
-    <canvas id="comparisonChart"></canvas>
-  `;
-  
-  const comparisonChart = new Chart(document.getElementById('comparisonChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Hits', 'Catches', 'Eliminations', 'Dodges', 'Times Hit', 'Times Caught', 'Times Eliminated'],
-      datasets: [
-        {
-          label: playerName1,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-          data: [player1Stats.hits, player1Stats.catches, player1Stats.totalEliminations, player1Stats.dodges, player1Stats.timesHit, player1Stats.timesCaught, player1Stats.timesEliminated]
-        },
-        {
-          label: playerName2,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          data: [player2Stats.hits, player2Stats.catches, player2Stats.totalEliminations, player2Stats.dodges, player2Stats.timesHit, player2Stats.timesCaught, player2Stats.timesEliminated]
-        }
-      ]
-    },
-    options: {
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
-      }
+
+  compareButton.addEventListener('click', () => {
+    const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+    if (selectedPlayers.length >= 2) {
+      compareStats(statsArray, selectedPlayers);
+    } else {
+      alert('Please select at least 2 players to compare');
     }
   });
-}
+  
+  function compareStats(statsArray, selectedPlayers) {
+      const comparisonDiv = document.getElementById('comparison');
+  comparisonDiv.innerHTML = `
+    <h2>Comparing ${selectedPlayers}</h2>
+    <canvas id="comparisonChart"></canvas>
+  `;
+    const comparisonChart = new Chart(document.getElementById('comparisonChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Hits', 'Catches', 'Eliminations', 'Dodges', 'Times Hit', 'Times Caught', 'Times Eliminated'],
+        datasets: selectedPlayers.map(playerName => {
+          const playerStats = statsArray.filter(stats => stats.PlayerName === playerName)[0];
+          return {
+            label: playerName,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            data: [playerStats.hits, playerStats.catches, playerStats.totalEliminations, playerStats.dodges, playerStats.timesHit, playerStats.timesCaught, playerStats.timesEliminated]
+          };
+        })
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
+    });
+  }
+  
 // Get the compare button element
 const compareButton = document.querySelector('#compare-button');
 
-
-// Add a click event listener to the compare button
-compareButton.addEventListener('click', function() {
-  // Get the graph canvas element
-  const graphCanvas = document.querySelector('#graph-canvas');
-
-  // Set the background color of the graph canvas to white
-  graphCanvas.style.backgroundColor = 'white';
-});
 
