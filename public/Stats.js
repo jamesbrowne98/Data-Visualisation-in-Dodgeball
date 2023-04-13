@@ -122,21 +122,24 @@ fetch('/api/Stats')
   });
   
   function compareStats(statsArray, selectedPlayers) {
-      const comparisonDiv = document.getElementById('comparison');
-  comparisonDiv.innerHTML = `
-    <h2>Comparing ${selectedPlayers}</h2>
-    <canvas id="comparisonChart"></canvas>
-  `;
+    const comparisonDiv = document.getElementById('comparison');
+    comparisonDiv.innerHTML = `
+      <h2>Comparing ${selectedPlayers}</h2>
+      <canvas id="comparisonChart"></canvas>
+    `;
+    
+    const colors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
+  
     const comparisonChart = new Chart(document.getElementById('comparisonChart'), {
       type: 'bar',
       data: {
         labels: ['Hits', 'Catches', 'Eliminations', 'Dodges', 'Times Hit', 'Times Caught', 'Times Eliminated'],
-        datasets: selectedPlayers.map(playerName => {
+        datasets: selectedPlayers.map((playerName, index) => {
           const playerStats = statsArray.filter(stats => stats.PlayerName === playerName)[0];
           return {
             label: playerName,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: colors[index % colors.length],
+            borderColor: colors[index % colors.length],
             borderWidth: 1,
             data: [playerStats.hits, playerStats.catches, playerStats.totalEliminations, playerStats.dodges, playerStats.timesHit, playerStats.timesCaught, playerStats.timesEliminated]
           };
@@ -155,6 +158,7 @@ fetch('/api/Stats')
       }
     });
   }
+  
   
 // Get the compare button element
 const compareButton = document.querySelector('#compare-button');
