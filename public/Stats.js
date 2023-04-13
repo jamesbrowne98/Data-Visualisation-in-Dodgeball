@@ -112,7 +112,6 @@ fetch('/api/Stats')
     console.error(error);
   });
 
-
   compareButton.addEventListener('click', () => {
     const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
     if (selectedPlayers.length >= 2) {
