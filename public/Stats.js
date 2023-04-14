@@ -42,7 +42,12 @@ fetch('/api/Stats')
 
 // fetch the stats from the API
 // Fetch stats data from API
-fetch('/api/Stats')
+const gameSelect = document.getElementById('gameSelect');
+let selectedGame;
+let statsArray;
+
+// Fetch the stats data for the selected game ID
+fetch(`/api/Stats?game_id=${selectedGame}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -97,9 +102,10 @@ fetch('/api/Stats')
     const compareButton = document.createElement('button');
     compareButton.innerText = 'Compare';
     compareButton.addEventListener('click', () => {
+      selectedGame = gameSelect.value;
       const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
       if (selectedPlayers.length > 1) {
-        compareStats(statsArray, selectedPlayers);
+        compareStats(statsArray, selectedPlayers, selectedGame);
       } else {
         alert('Please select at least 2 players to compare');
       }
@@ -115,27 +121,30 @@ fetch('/api/Stats')
   compareButton.addEventListener('click', () => {
     const selectedPlayers = Array.from(playerSelectContainer.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
     if (selectedPlayers.length >= 2) {
-      compareStats(statsArray, selectedPlayers);
+      compareStats(statsArray, selectedPlayers, selectedGame);
     } else {
       alert('Please select at least 2 players to compare');
     }
   });
   
-  function compareStats(statsArray, selectedPlayers) {
+  
+  function compareStats(statsArray, selectedPlayers, selectedGame) {
     const comparisonDiv = document.getElementById('comparison');
     comparisonDiv.innerHTML = `
-      <h2>Comparing ${selectedPlayers}</h2>
+      <h2>Comparing ${selectedPlayers} in Game ${selectedGame}</h2>
       <canvas id="comparisonChart"></canvas>
     `;
-    
+  
     const colors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
+  
+    const filteredStatsArray = statsArray.filter(stats => stats.game_id === selectedGame);
   
     const comparisonChart = new Chart(document.getElementById('comparisonChart'), {
       type: 'bar',
       data: {
         labels: ['Hits', 'Catches', 'Eliminations', 'Dodges', 'Times Hit', 'Times Caught', 'Times Eliminated'],
         datasets: selectedPlayers.map((playerName, index) => {
-          const playerStats = statsArray.filter(stats => stats.PlayerName === playerName)[0];
+          const playerStats = filteredStatsArray.filter(stats => stats.PlayerName === playerName)[0];
           return {
             label: playerName,
             backgroundColor: colors[index % colors.length],
@@ -158,6 +167,7 @@ fetch('/api/Stats')
       }
     });
   }
+  
   
   
 // Get the compare button element
