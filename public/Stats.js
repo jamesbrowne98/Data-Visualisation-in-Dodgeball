@@ -1,46 +1,4 @@
-/*
-fetch('/api/Stats')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(statsArray => {
-    const statsDiv = document.getElementById('stats');
-    let statsHTML = '';
-    statsArray.forEach(stats => {
-      statsHTML += `
-        <div>
-          <p>Player ID: ${stats.player_id}</p>
-          <p>Game ID: ${stats.game_id}</p>
-          <p>Name: ${stats.PlayerName}</p>
-          <p>Hits: ${stats.hits}</p>
-          <p>Catches: ${stats.catches}</p>
-          <p>Total Eliminations: ${stats.totalEliminations}</p>
-          <p>Single Ball Eliminations: ${stats.singleBallEliminations}</p>
-          <p>Team Eliminations: ${stats.teamEliminations}</p>
-          <p>Dodges: ${stats.dodges}</p>
-          <p>Times Hit: ${stats.timesHit}</p>
-          <p>Single Out: ${stats.singleOut}</p>
-          <p>Team Out: ${stats.teamOut}</p>
-          <p>Misc Out: ${stats.miscOut}</p>
-          <p>Times Caught: ${stats.timesCaught}</p>
-          <p>Times Eliminated: ${stats.timesEliminated}</p>
-          <p>KD: ${stats.KD.$numberDecimal}</p>
-          <p>Sets Off: ${stats.setsOff}</p>
-        </div>
-      `;
-    });
-    statsDiv.innerHTML = statsHTML;
-  })
-  .catch(error => {
-    console.error(error);
-  });
 
-  */
-
-// fetch the stats from the API
 // Fetch stats data from API
 const gameSelect = document.getElementById('gameSelect');
 let selectedGame;
@@ -56,28 +14,74 @@ fetch(`/api/Stats?game_id=${selectedGame}`)
   })
   .then(statsArray => {
     const statsDiv = document.getElementById('stats');
-    let statsHTML = '';
+    let statsHTML = '<table>';
     statsArray.forEach(stats => {
       statsHTML += `
-        <div>
-          <p>Player ID: ${stats.player_id}</p>
-          <p>Game ID: ${stats.game_id}</p>
-          <p>Name: ${stats.PlayerName}</p>
-          <p>Hits: ${stats.hits}</p>
-          <p>Catches: ${stats.catches}</p>
-          <p>Total Eliminations: ${stats.totalEliminations}</p>
-          <p>Single Ball Eliminations: ${stats.singleBallEliminations}</p>
-          <p>Team Eliminations: ${stats.teamEliminations}</p>
-          <p>Dodges: ${stats.dodges}</p>
-          <p>Times Hit: ${stats.timesHit}</p>
-          <p>Single Out: ${stats.singleOut}</p>
-          <p>Team Out: ${stats.teamOut}</p>
-          <p>Misc Out: ${stats.miscOut}</p>
-          <p>Times Caught: ${stats.timesCaught}</p>
-          <p>Times Eliminated: ${stats.timesEliminated}</p>
-          <p>KD: ${stats.KD.$numberDecimal}</p>
-          <p>Sets Off: ${stats.setsOff}</p>
-        </div>
+    <tr>
+      <th colspan="2">${stats.game_id}</th>
+    </tr>
+    <tr>
+      <th colspan="2">${stats.PlayerName}</th>
+    </tr>
+    <tr>
+      <td>Hits:</td>
+      <td>${stats.hits}</td>
+    </tr>
+    <tr>
+      <td>Catches:</td>
+      <td>${stats.catches}</td>
+    </tr>
+    <tr>
+      <td>Total Eliminations:</td>
+      <td>${stats.totalEliminations}</td>
+    </tr>
+    <tr>
+      <td>Single Ball Eliminations:</td>
+      <td>${stats.singleBallEliminations}</td>
+    </tr>
+    <tr>
+      <td>Team Eliminations:</td>
+      <td>${stats.teamEliminations}</td>
+    </tr>
+    <tr>
+      <td>Dodges:</td>
+      <td>${stats.dodges}</td>
+    </tr>
+    <tr>
+      <td>Times Hit:</td>
+      <td>${stats.timesHit}</td>
+    </tr>
+    <tr>
+      <td>Single Out:</td>
+      <td>${stats.singleOut}</td>
+    </tr>
+    <tr>
+      <td>Team Out:</td>
+      <td>${stats.teamOut}</td>
+    </tr>
+    <tr>
+      <td>Misc Out:</td>
+      <td>${stats.miscOut}</td>
+    </tr>
+    <tr>
+      <td>Times Caught:</td>
+      <td>${stats.timesCaught}</td>
+    </tr>
+    <tr>
+      <td>Times Eliminated:</td>
+      <td>${stats.timesEliminated}</td>
+    </tr>
+    <tr>
+      <td>KD:</td>
+      <td>${stats.KD.$numberDecimal}</td>
+    </tr>
+    <tr>
+      <td>Sets Off:</td>
+      <td>${stats.setsOff}</td>
+    </tr>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+    </tr>
       `;
     });
     statsDiv.innerHTML = statsHTML;
@@ -172,5 +176,116 @@ fetch(`/api/Stats?game_id=${selectedGame}`)
   
 // Get the compare button element
 const compareButton = document.querySelector('#compare-button');
+
+// Fetch all stats data from API
+fetch('/api/Stats')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(statsArray => {
+    const statsDiv = document.getElementById('stats');
+    const playerNames = [...new Set(statsArray.map(stats => stats.PlayerName))];
+    const gameIDs = [...new Set(statsArray.map(stats => stats.game_id))];
+    
+    // Create dropdown menu for selecting player
+    const playerSelect = document.createElement('select');
+    playerSelect.id = 'playerSelect';
+    playerSelect.addEventListener('change', updateChart);
+    playerNames.forEach(name => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.text = name;
+      playerSelect.appendChild(option);
+    });
+    statsDiv.appendChild(playerSelect);
+    
+    // Create line chart
+    const chartCanvas = document.createElement('canvas');
+    chartCanvas.id = 'chart';
+    statsDiv.appendChild(chartCanvas);
+    
+    const chartData = {
+      labels: gameIDs,
+      datasets: []
+    };
+    
+    playerNames.forEach(name => {
+      const playerStats = statsArray.filter(stats => stats.PlayerName === name);
+      const data = [];
+      const color = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+      
+      // Push the data for each game into the data array
+      gameIDs.forEach(gameID => {
+        const gameStats = playerStats.find(stats => stats.game_id === gameID);
+        data.push(gameStats ? gameStats.hits : 0);
+      });
+      
+      chartData.datasets.push({
+        label: name,
+        data: data,
+        borderColor: color,
+        backgroundColor: `${color}33`,
+        borderWidth: 1,
+        fill: false
+      });
+    });
+    
+    const chartOptions = {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Player Stats by Game'
+      },
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Game ID'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Stat Value'
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
+    
+    const chart = new Chart(chartCanvas, {
+      type: 'line',
+      data: chartData,
+      options: chartOptions
+    });
+    
+    function updateChart() {
+      const selectedPlayer = playerSelect.value;
+      const selectedStats = statsArray.filter(stats => stats.PlayerName === selectedPlayer);
+      
+      // Update the data for each dataset in the chart
+      chartData.datasets.forEach(dataset => {
+        const data = [];
+        
+        gameIDs.forEach(gameID => {
+          const gameStats = selectedStats.find(stats => stats.game_id === gameID);
+          data.push(gameStats ? gameStats[dataset.label.toLowerCase()] : 0);
+        });
+        
+        dataset.data = data;
+      });
+      
+      chart.update();
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
 
 

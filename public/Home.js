@@ -23,6 +23,6 @@ function trainingDirect() {
                                  window.location ="Welcome.html";
                                       }
 
-                                      function homeDirect() {
-                                        window.location="Home.html";
+                                      function juniorsDirect() {
+                                        window.location="Juniors.html";
                                       }
