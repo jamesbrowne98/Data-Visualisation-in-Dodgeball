@@ -1,4 +1,3 @@
-
 // Fetch stats data from API
 const gameSelect = document.getElementById('gameSelect');
 let selectedGame;
@@ -15,75 +14,91 @@ fetch(`/api/Stats?game_id=${selectedGame}`)
   .then(statsArray => {
     const statsDiv = document.getElementById('stats');
     let statsHTML = '<table>';
+    let i = 0;
     statsArray.forEach(stats => {
+      // Create a new table row every three statistics
+      if (i % 3 === 0) {
+        statsHTML += '<tr>';
+      }
       statsHTML += `
-    <tr>
-      <th colspan="2">${stats.game_id}</th>
-    </tr>
-    <tr>
-      <th colspan="2">${stats.PlayerName}</th>
-    </tr>
-    <tr>
-      <td>Hits:</td>
-      <td>${stats.hits}</td>
-    </tr>
-    <tr>
-      <td>Catches:</td>
-      <td>${stats.catches}</td>
-    </tr>
-    <tr>
-      <td>Total Eliminations:</td>
-      <td>${stats.totalEliminations}</td>
-    </tr>
-    <tr>
-      <td>Single Ball Eliminations:</td>
-      <td>${stats.singleBallEliminations}</td>
-    </tr>
-    <tr>
-      <td>Team Eliminations:</td>
-      <td>${stats.teamEliminations}</td>
-    </tr>
-    <tr>
-      <td>Dodges:</td>
-      <td>${stats.dodges}</td>
-    </tr>
-    <tr>
-      <td>Times Hit:</td>
-      <td>${stats.timesHit}</td>
-    </tr>
-    <tr>
-      <td>Single Out:</td>
-      <td>${stats.singleOut}</td>
-    </tr>
-    <tr>
-      <td>Team Out:</td>
-      <td>${stats.teamOut}</td>
-    </tr>
-    <tr>
-      <td>Misc Out:</td>
-      <td>${stats.miscOut}</td>
-    </tr>
-    <tr>
-      <td>Times Caught:</td>
-      <td>${stats.timesCaught}</td>
-    </tr>
-    <tr>
-      <td>Times Eliminated:</td>
-      <td>${stats.timesEliminated}</td>
-    </tr>
-    <tr>
-      <td>KD:</td>
-      <td>${stats.KD.$numberDecimal}</td>
-    </tr>
-    <tr>
-      <td>Sets Off:</td>
-      <td>${stats.setsOff}</td>
-    </tr>
-    <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
+        <td>
+          <table>
+            <tr>
+              <th colspan="2">${stats.game_id}</th>
+            </tr>
+            <tr>
+              <th colspan="2">${stats.PlayerName}</th>
+            </tr>
+            <tr>
+              <td>Hits:</td>
+              <td>${stats.hits}</td>
+            </tr>
+            <tr>
+              <td>Catches:</td>
+              <td>${stats.catches}</td>
+            </tr>
+            <tr>
+              <td>Total Eliminations:</td>
+              <td>${stats.totalEliminations}</td>
+            </tr>
+            <tr>
+              <td>Single Ball Eliminations:</td>
+              <td>${stats.singleBallEliminations}</td>
+            </tr>
+            <tr>
+              <td>Team Eliminations:</td>
+              <td>${stats.teamEliminations}</td>
+            </tr>
+            <tr>
+              <td>Dodges:</td>
+              <td>${stats.dodges}</td>
+            </tr>
+            <tr>
+              <td>Times Hit:</td>
+              <td>${stats.timesHit}</td>
+            </tr>
+            <tr>
+              <td>Single Out:</td>
+              <td>${stats.singleOut}</td>
+            </tr>
+            <tr>
+              <td>Team Out:</td>
+              <td>${stats.teamOut}</td>
+            </tr>
+            <tr>
+              <td>Misc Out:</td>
+              <td>${stats.miscOut}</td>
+            </tr>
+            <tr>
+              <td>Times Caught:</td>
+              <td>${stats.timesCaught}</td>
+            </tr>
+            <tr>
+              <td>Times Eliminated:</td>
+              <td>${stats.timesEliminated}</td>
+            </tr>
+            <tr>
+              <td>KD:</td>
+              <td>${stats.KD.$numberDecimal}</td>
+            </tr>
+            <tr>
+              <td>Sets Off:</td>
+              <td>${stats.setsOff}</td>
+            </tr>
+          </table>
+        </td>
       `;
+      // Close the table row every three statistics
+      if (i % 3 === 2) {
+        statsHTML += '</tr>';
+      }
+      i++;
     });
+    // Close the table row if the last set of statistics is not a multiple of three
+    if (i % 3 !== 0) {
+      statsHTML += '</tr>';
+    }
+    statsHTML += '</table>';
     statsDiv.innerHTML = statsHTML;
     
     // Get players' names and create dropdown options
@@ -286,6 +301,3 @@ fetch('/api/Stats')
   .catch(error => {
     console.error(error);
   });
-
-
-
