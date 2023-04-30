@@ -6,9 +6,6 @@ const statsRouter = require('./routes/api');
 
 const app = express();
 
-app.get('/', function(req, res) {
-  res.redirect(public/Home.html);
-})
 
 // Use Morgan middleware to log requests
 app.use(morgan('dev'));
@@ -34,8 +31,11 @@ mongoose.connection.on('error', error => {
 app.use('/api/Stats', statsRouter);
 
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });
+
 
 
