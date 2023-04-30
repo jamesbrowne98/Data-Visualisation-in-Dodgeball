@@ -24,66 +24,66 @@ fetch(`/api/Stats?game_id=${selectedGame}`)
         <td>
           <table>
             <tr>
-              <th colspan="2">${stats.game_id}</th>
+              <th colspan="2" style="color:white">${stats.GameName}</th>
             </tr>
             <tr>
-              <th colspan="2">${stats.PlayerName}</th>
+              <th colspan="2" style="color:white">${stats.PlayerName}</th>
             </tr>
             <tr>
-              <td>Hits:</td>
-              <td>${stats.hits}</td>
+              <td style="color:white">Hits:</td>
+              <td style="color:white">${stats.hits}</td>
             </tr>
             <tr>
-              <td>Catches:</td>
-              <td>${stats.catches}</td>
+              <td style="color:white">Catches:</td>
+              <td style="color:white">${stats.catches}</td>
             </tr>
             <tr>
-              <td>Total Eliminations:</td>
-              <td>${stats.totalEliminations}</td>
+              <td style="color:white">Total Eliminations:</td>
+              <td style="color:white">${stats.totalEliminations}</td>
             </tr>
             <tr>
-              <td>Single Ball Eliminations:</td>
-              <td>${stats.singleBallEliminations}</td>
+              <td style="color:white">Single Ball Eliminations:</td>
+              <td style="color:white">${stats.singleBallEliminations}</td>
             </tr>
             <tr>
-              <td>Team Eliminations:</td>
-              <td>${stats.teamEliminations}</td>
+              <td style="color:white">Team Eliminations:</td>
+              <td style="color:white">${stats.teamEliminations}</td>
             </tr>
             <tr>
-              <td>Dodges:</td>
-              <td>${stats.dodges}</td>
+              <td style="color:white">Dodges:</td>
+              <td style="color:white">${stats.dodges}</td>
             </tr>
             <tr>
-              <td>Times Hit:</td>
-              <td>${stats.timesHit}</td>
+              <td style="color:white">Times Hit:</td>
+              <td style="color:white">${stats.timesHit}</td>
             </tr>
             <tr>
-              <td>Single Out:</td>
-              <td>${stats.singleOut}</td>
+              <td style="color:white">Single Out:</td>
+              <td style="color:white">${stats.singleOut}</td>
             </tr>
             <tr>
-              <td>Team Out:</td>
-              <td>${stats.teamOut}</td>
+              <td style="color:white">Team Out:</td>
+              <td style="color:white">${stats.teamOut}</td>
             </tr>
             <tr>
-              <td>Misc Out:</td>
-              <td>${stats.miscOut}</td>
+              <td style="color:white">Misc Out:</td>
+              <td style="color:white">${stats.miscOut}</td>
             </tr>
             <tr>
-              <td>Times Caught:</td>
-              <td>${stats.timesCaught}</td>
+              <td style="color:white">Times Caught:</td>
+              <td style="color:white">${stats.timesCaught}</td>
             </tr>
             <tr>
-              <td>Times Eliminated:</td>
-              <td>${stats.timesEliminated}</td>
+              <td style="color:white">Times Eliminated:</td>
+              <td style="color:white">${stats.timesEliminated}</td>
             </tr>
             <tr>
-              <td>KD:</td>
-              <td>${stats.KD.$numberDecimal}</td>
+              <td style="color:white">KD:</td>
+              <td style="color:white">${stats.KD.$numberDecimal}</td>
             </tr>
             <tr>
-              <td>Sets Off:</td>
-              <td>${stats.setsOff}</td>
+              <td style="color:white">Sets Off:</td>
+              <td style="color:white">${stats.setsOff}</td>
             </tr>
           </table>
         </td>
