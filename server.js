@@ -6,6 +6,10 @@ const statsRouter = require('./routes/api');
 
 const app = express();
 
+app.get('/', function(req, res) {
+  res.redirect(public/Home.html);
+})
+
 // Use Morgan middleware to log requests
 app.use(morgan('dev'));
 
