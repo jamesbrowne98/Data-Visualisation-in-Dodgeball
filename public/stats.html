@@ -25,13 +25,24 @@
       width: 100%;
       /* Full width */            
     }
-    #stats {
-    margin-top: 150px;
-    max-height: 700px;
-    overflow-y: auto;
-    }
-
-
+     #stats-container {
+        display: flex;
+        flex-direction: row;
+        margin-top: 150px;
+      }
+      #stats {
+        flex-basis: 70%;
+        max-height: 700px;
+        overflow-y: auto;
+      }
+      #stats h2 {
+        margin-right: 20px;
+      }
+      #explanation {
+        flex-basis: 30%;
+        padding: 20px;
+        color: white;
+      }
 
 
   </style>
@@ -57,15 +68,28 @@
     <title>Stats Page</title>
   </head>
   <body>
-    <div id="stats"></div>
+        <div id="stats-container">
+      <div id="stats"></div>
+      <div id="explanation">
+        <p>The Table to the left displays the statistics for each player who participated in the selected games. The table includes data on each player's total number of catches, throws, and dodges </p>
+        <p>A single hit is for when a players makes a hit throwing on their own, a team hit is when multiple people make a hit on someone, the same goes for when a players takes an out too</p>
+        <p>Misc out's can be from invalid throws (when a players doesn't throw at another player) or when they line fault</p>
+        <p>Seasonal record holders:
+        <p>  Hits	        - James Browne:	199	2021/22 </p>
+        <p>  Catches	    - Ross Greig: 	  40	2021/22</p>
+        <p>  Eliminations	- Ross Greig: 	  238	2021/22</p>
+        <p>  Ratio	      - Ross Greig:  	2.5	2018/19</p>
+          </p>
+      </div>
+    </div>
     <div id="chart"></div>
     <div id="playerSelectContainer">
       <select id="gameSelect">
-        <option value="">All Games</option>
         <option value="norwich222301" >Cyclones vs Norwich 22/23</option>
         <option value="bees222301" >Cyclones vs Bees 22/23</option>
         <option value="spartans220221112">Cyclones vs Spartans 2nds 22/23</option>
         <option value="thunderdodge20221112">Cyclones vs Thunderdodge</option>
+        <option value=""
       </select>
       <label for="playerSelect">Select player(s):</label>
       <div id="playerCheckboxes"></div>
